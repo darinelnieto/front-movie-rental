@@ -1,7 +1,7 @@
 <template>
   <section class="users">
       <div class="container">
-          <div class="row" v-show="isAdmin">
+          <div class="row" v-if="isAdmin">
               <div class="col-12">
                   <div class="add-user">
                       <router-link to="/crear-users" class="add-user">Agregar nuevo</router-link>
@@ -35,7 +35,7 @@
                   </table>
               </div>
           </div>
-          <div class="row is-not-admin" v-show="!isAdmin">
+          <div class="row is-not-admin"  v-else>
             <div class="col-12">
               <div class="card">
                 <div class="card-header alert alert-danger">
@@ -66,17 +66,13 @@ export default {
     }
   },
   async created(){
-      var user = localStorage.getItem('id');
-      axios.get("http://127.0.0.1:8000/api/logged?id=" + user).then((result) => {
-          this.result = result.data;
-          result = result.data.data[0].rol[0].name;
-          if(result == 'admin'){
-              this.isAdmin = true;
-              axios.get("http://127.0.0.1:8000/api/read/user").then((result) => {
-                this.result = result.data;
-              });
-          }
-      });
+      var user = localStorage.getItem('rol');
+      if(user== 'admin'){
+          this.isAdmin = true;
+          axios.get("http://127.0.0.1:8000/api/read/user").then((result) => {
+            this.result = result.data;
+          });
+      }
   },
 };
 

@@ -34,8 +34,7 @@
         data(){
             return{
                 'email': '',
-                'password': '',
-                islogin:false
+                'password': ''
             }
         },
         methods:{
@@ -50,7 +49,8 @@
                     localStorage.setItem('user', response.data.user[0].name);
                     localStorage.setItem('id', response.data.user[0].id);
                     localStorage.setItem('rol', response.data.user[0].rol[0].name);
-                    this.$router.push('/movies');
+                    this.$router.push('');
+                    window.location.href = '/movies';
                 })
                 .catch(error => {
                     var data = error.response.data;
